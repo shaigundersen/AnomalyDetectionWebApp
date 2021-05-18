@@ -4,12 +4,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import "../style.css";
+import axios from "axios";
 
 class InputForm extends Component {
   state = {
     detectorType: "",
-    learnCsvFile: "Please Upload Learn* CSV",
+    learnCsvFile: "Please Upload Learn CSV",
     anomalyCsvFile: "Please Upload Anomaly CSV",
+    learn:null,
+    anomaly:null
   };
 
   selectionChanged = (event) => {
@@ -21,11 +24,32 @@ class InputForm extends Component {
     console.log(fileProp);
     let val = event.target.files[0].name;
     this.setState({ [fileProp]: val });
+
+    let type = fileProp.replace("CsvFile", '')
+    console.log(type)
+
+    this.setState({[type]: event.target.files[0]})
+
+    const reader = new FileReader()
+    reader.readAsText(this.state.learn)
+    console.log(reader.result)
+
   };
+
+  submitHandler = (event) =>{
+    alert("submitted files")
+    const reader = FileReader()
+    const body = event.target.files[0]
+    reader.readAsText(body)
+    const content = reader.result
+
+    alert(content)
+    axios.post('http://localhost:9876/detect')
+  }
 
   render() {
     return (
-      <Form className="m-3 items mainForm">
+      <Form className="m-3 items mainForm" onSubmit={this.submitHandler}>
         <Row>
           <Col xs="auto">
             <Form.Control

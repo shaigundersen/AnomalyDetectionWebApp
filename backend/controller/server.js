@@ -14,6 +14,7 @@ app.get("/", (req, res)=>{
 })
 
 app.post("/detect", (req,res)=>{
+    console.log("entered detect")
     if(req.files){
         const train = req.body.train
         const test = req.body.test
@@ -24,4 +25,4 @@ app.post("/detect", (req,res)=>{
     res.end()
 })
 
-app.listen(8080)
+app.listen(9876, ()=>{console.log("Server running")})
