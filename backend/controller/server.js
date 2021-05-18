@@ -32,6 +32,6 @@ app.post("/detect", (req, res) => {
   res.end();
 });
 
-app.listen(9876, () => {
+app.listen(8080, () => {
   console.log("Server running");
 });
