@@ -1,7 +1,14 @@
-function detect(train, test){
-    // use addon, detect anomalies ~> anomalies = addon.detect(train, test)
-    // return anomalies
-    console.log("detection started")
-}
+const addon = require("../build/Release/AnomalyDetectorAddon");
 
-module.exports.detect = detect
+function detect(detectorType, train, test) {
+  return new Promise((resolve, reject) => {
+    addon.LearnAndDetect(detectorType, train, test, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
+module.exports.detect = detect;

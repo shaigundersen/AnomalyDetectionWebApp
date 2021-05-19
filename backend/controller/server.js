@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-// const fileUpload = require('express-fileupload')
+// // const fileUpload = require('express-fileupload')
 const model = require("../model/AnomalyDetecor.js");
 
 const app = express();
@@ -23,15 +23,48 @@ app.get("/", (req, res) => {
 app.post("/detect", (req, res) => {
   console.log("entered detect");
   if (req.files) {
-    const train = req.body.train;
-    const test = req.body.test;
-    const anomalies = model.detect(train, test);
-    res.write(anomalies);
+    const learnJson = req.body.train;
+    const anomalyJson = req.body.test;
+    model
+      .detect("regression", learnJson, anomalyJson)
+      .then((anomalyReport) => res.write(anomalyReport))
+      .catch((error) => console.log(error));
   }
-  // res.write("detect")
   res.end();
 });
 
-app.listen(9876, () => {
+app.listen(8080, () => {
   console.log("Server running");
 });
+
+/****************************
+ *       region Test        *
+ ****************************/
+// const learnName = "C:\\Users\\97205\\Desktop\\reg_flight.json";
+// const anomalyName =
+//   "C:\\Users\\97205\\Desktop\\anomaly_flight_with_headers.json";
+// fs = require("fs");
+// // read first file
+// fs.readFile(learnName, function (err, data) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     const learnJson = JSON.parse(data);
+//     // read second file
+//     fs.readFile(anomalyName, function (err, data) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         const anomalyJson = JSON.parse(data);
+//         // detect returns a promise
+//         model
+//           .detect("regression", learnJson, anomalyJson)
+//           .then((anomalyReport) => console.log(anomalyReport))
+//           .catch((error) => console.log(error));
+//       }
+//     });
+//   }
+// });
+/****************************
+ *       endregion Test     *
+ ****************************/
