@@ -11,8 +11,8 @@ class InputForm extends Component {
     detectorType: "",
     learnCsvFile: "Please Upload Learn CSV",
     anomalyCsvFile: "Please Upload Anomaly CSV",
-    learn:null,
-    anomaly:null
+    learn:null, // learn file
+    anomaly:null // test file
   };
 
   selectionChanged = (event) => {
@@ -27,29 +27,20 @@ class InputForm extends Component {
 
     let type = fileProp.replace("CsvFile", '')
     console.log(type)
-
-    this.setState({[type]: event.target.files[0]})
-
-    const reader = new FileReader()
-    reader.readAsText(this.state.learn)
-    console.log(reader.result)
-
+    this.setState({[type]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
   };
 
   submitHandler = (event) =>{
     alert("submitted files")
-    const reader = FileReader()
-    const body = event.target.files[0]
-    reader.readAsText(body)
-    const content = reader.result
-
-    alert(content)
-    axios.post('http://localhost:9876/detect')
+    const reader = new FileReader()
+    reader.readAsText(this.state.learn) // does it work?
+    console.log(reader.result.substring(0,100)) // doesn't work
+    axios.post('http://localhost:9876/detect', {}) // does it work?
   }
 
   render() {
     return (
-      <Form className="m-3 items mainForm" onSubmit={this.submitHandler}>
+      <Form className="m-3 items mainForm" onSubmit={this.submitHandler()}>
         <Row>
           <Col xs="auto">
             <Form.Control
