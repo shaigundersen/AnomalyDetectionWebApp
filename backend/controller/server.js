@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-// // const fileUpload = require('express-fileupload')
+const bodyParser = require("body-parser");
 const model = require("../model/AnomalyDetecor.js");
 
 const app = express();
@@ -9,36 +9,46 @@ app.use(
     extended: false,
   })
 );
-//app.use(express.static(path.join(__dirname, "../build")));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "../build")));
 //app.use(express.static("../../frontend/public"));
 // app.use(fileUpload())
 
 app.get("/", (req, res) => {
-  //res.sendFile("index.html")
-  //res.sendFile(path.join(__dirname, "../build", "index.html"));
-  console.log("got here");
-  console.log("got here");
-  console.log("got here");
-  res.write("HI");
-
-  res.end();
+  // res.sendFile("index.html")
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
+  //   res.write("HI");
+  //   res.end();
 });
 
 app.post("/detect", (req, res) => {
   console.log("entered detect");
-  if (req.files) {
-    const learnJson = req.body.train;
-    const anomalyJson = req.body.test;
-    model
-      .detect("regression", learnJson, anomalyJson)
-      .then((anomalyReport) => res.write(anomalyReport))
-      .catch((error) => console.log(error));
-  }
-  //res.json({ hi: "hi" });
-  res.end();
+  console.log(req.body);
+  let data = req.body.data;
+  let learnJson = data[0];
+  let testJson = data[1];
+  // let algoType = data[2]
+  model
+    .detect("hybrid" /* algoType */, learnJson, testJson)
+    .then((anomalyReport) => {
+      console.log(anomalyReport);
+      res.send(JSON.stringify(anomalyReport));
+    })
+    .catch((error) => console.log(error));
+
+  // if (req.files) {
+  //   const learnJson = req.body.train;
+  //   const anomalyJson = req.body.test;
+  //   model
+  //     .detect("regression", learnJson, anomalyJson)
+  //     .then((anomalyReport) => res.write(anomalyReport))
+  //     .catch((error) => console.log(error));
+  // }
+  // res.end();
 });
 
-app.listen(8080, () => {
+app.listen(8081, () => {
   console.log("Server running");
 });
 

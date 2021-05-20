@@ -31,19 +31,12 @@ class InputForm extends Component {
     this.setState({ [type]: event.target.files[0] }); // trying to change learn/anomaly to the chosen file
   };
 
-  submitHandler = async (event) => {
-    // axios
-    //   .post("/detect")
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
-    // alert("submitted files");
-    // const reader = new FileReader();
-    // reader.readAsText(this.state.learn); // does it work?
-    // console.log(reader.result.substring(0, 100)); // doesn't work
-    // axios.post("http://localhost:9876/detect", {}); // does it work?
+  submitHandler = (event) => {
+    alert("submitted files!!!!");
+    const reader = new FileReader();
+    reader.readAsText(this.state.learn); // does it work?
+    console.log(reader.result.substring(0, 100)); // doesn't work
+    axios.post("http://localhost:9876/detect", {}); // does it work?
   };
 
   render() {
