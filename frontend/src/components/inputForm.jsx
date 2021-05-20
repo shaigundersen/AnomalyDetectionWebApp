@@ -27,7 +27,6 @@ class InputForm extends Component {
     let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid image extensions in array
     if (valid_extensions.includes(file_type)){
       let fileProp = event.target.name;
-      console.log(file_type);
       let csv_file = event.target.files[0].name;
       this.setState({ [fileProp]: csv_file });  
       let type = fileProp.replace("CsvFile", '')
@@ -58,8 +57,8 @@ class InputForm extends Component {
             json = "{" + json + "}";
             // console.log(json);
             this.setState({[type]: json})
-            console.log(this.state.anomaly)
             console.log(this.state.learn)
+            console.log(this.state.anomaly)
         }
     }
 
@@ -69,8 +68,12 @@ class InputForm extends Component {
     alert("submitted files!!!!")
     const reader = new FileReader()
     // reader.readAsText(this.state.learn) // does it work?
-    console.log(reader.result.substring(0,100)) // doesn't work
-    axios.post('http://localhost:9876/detect', {}) // does it work?
+    // console.log(reader.result.substring(0,100)) // doesn't work
+    axios.post('http://localhost:8081/detect', {
+      DetectorType: this.state.detectorType,
+      Learn: this.state.learn,
+      Anomaly: this.state.anomaly
+    })
   }
 
   render() {
