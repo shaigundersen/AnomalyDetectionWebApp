@@ -66,7 +66,7 @@ class InputForm extends Component {
     const reader = new FileReader();
     // reader.readAsText(this.state.learn) // does it work?
     // console.log(reader.result.substring(0,100)) // doesn't work
-    axios.post("http://localhost:8081/detect", {
+    axios.post("/detect", {
       DetectorType: this.state.detectorType,
       Learn: this.state.learnFile,
       Anomaly: this.state.anomalyFile,
