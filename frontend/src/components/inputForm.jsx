@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+
 import "../style.css";
 import axios from "axios";
 
@@ -13,24 +15,23 @@ class InputForm extends Component {
     anomalyFileName: "Please Upload Anomaly CSV",
     learnFile: null, // learn file
     anomalyFile: null, // test file
+    anomalyReport: null,
   };
 
   selectionChanged = (event) => {
     this.setState({ detectorType: event.target.value });
   };
 
+  // need to add some comments here..
   fileSelected = (event) => {
     let file = event.target.files[0];
     let file_type = file.type; //getting selected file type
-    let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid image extensions in array
+    let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid csv extensions in array
     if (valid_extensions.includes(file_type)) {
       let fileNameProperty = event.target.name;
       let fileName = event.target.files[0].name;
       this.setState({ [fileNameProperty]: fileName });
       let fileDataProperty = fileNameProperty.replace("Name", "");
-      // console.log(fileDataProperty)
-      // this.setState({[fileDataProperty]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
-
       let fileReader = new FileReader(); //creating new FileReader object
       fileReader.readAsText(file, "UTF-8");
       fileReader.onload = () => {
@@ -53,28 +54,25 @@ class InputForm extends Component {
         json = json.replaceAll("}", "");
         json = json.substring(1, json.length - 1); // remove wrapping []
         json = "{" + json + "}";
-        // console.log(json);
+
         this.setState({ [fileDataProperty]: json });
-        // console.log(this.state.learnFile);
-        // console.log(this.state.anomalyFile);
       };
     }
   };
 
   submitHandler = (event) => {
+    event.preventDefault();
     alert("submitted files!!!!");
-    const reader = new FileReader();
-    // reader.readAsText(this.state.learn) // does it work?
-    // console.log(reader.result.substring(0,100)) // doesn't work
     axios
       .post("/detect", {
-        DetectorType: this.state.detectorType,
-        Learn: this.state.learnFile,
-        Anomaly: this.state.anomalyFile,
+        detectorType: this.state.detectorType,
+        learn: this.state.learnFile,
+        anomaly: this.state.anomalyFile,
       })
       .then((response) => {
-        console.log("response");
-      });
+        this.setState({ anomalyReport: response.data.report });
+      })
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -120,6 +118,16 @@ class InputForm extends Component {
           <Col>
             <Button type="submit">Submit</Button>
           </Col>
+        </Row>
+        <Row>
+          <Card>
+            <Card.Body>
+              {/* prints report iff not null */}
+              {this.state.anomalyReport
+                ? JSON.stringify(this.state.anomalyReport)
+                : ""}
+            </Card.Body>
+          </Card>
         </Row>
       </Form>
     );
