@@ -15,6 +15,8 @@ class InputForm extends Component {
     anomaly:null // test file
   };
 
+
+
   selectionChanged = (event) => {
     this.setState({ detectorType: event.target.value });
   };
@@ -64,7 +66,7 @@ class InputForm extends Component {
   };
 
   submitHandler = (event) =>{
-    alert("submitted files")
+    alert("submitted files!!!!")
     const reader = new FileReader()
     // reader.readAsText(this.state.learn) // does it work?
     console.log(reader.result.substring(0,100)) // doesn't work
