@@ -54,7 +54,6 @@ class InputForm extends Component {
         json = json.replaceAll("}", "");
         json = json.substring(1, json.length - 1); // remove wrapping []
         json = "{" + json + "}";
-
         this.setState({ [fileDataProperty]: json });
       };
     }
