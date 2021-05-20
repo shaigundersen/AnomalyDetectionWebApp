@@ -9,15 +9,19 @@ app.use(
     extended: false,
   })
 );
-app.use(express.static(path.join(__dirname, "../build")));
+//app.use(express.static(path.join(__dirname, "../build")));
 //app.use(express.static("../../frontend/public"));
 // app.use(fileUpload())
 
 app.get("/", (req, res) => {
   //res.sendFile("index.html")
-  res.sendFile(path.join(__dirname, "../build", "index.html"));
-  //   res.write("HI");
-  //   res.end();
+  //res.sendFile(path.join(__dirname, "../build", "index.html"));
+  console.log("got here");
+  console.log("got here");
+  console.log("got here");
+  res.write("HI");
+
+  res.end();
 });
 
 app.post("/detect", (req, res) => {
@@ -30,6 +34,7 @@ app.post("/detect", (req, res) => {
       .then((anomalyReport) => res.write(anomalyReport))
       .catch((error) => console.log(error));
   }
+  //res.json({ hi: "hi" });
   res.end();
 });
 
