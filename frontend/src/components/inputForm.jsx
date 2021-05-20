@@ -20,27 +20,60 @@ class InputForm extends Component {
   };
 
   fileSelected = (event) => {
-    let fileProp = event.target.name;
-    console.log(fileProp);
-    let val = event.target.files[0].name;
-    this.setState({ [fileProp]: val });
+    let file = event.target.files[0];
+    let file_type = file.type; //getting selected file type
+    let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid image extensions in array
+    if (valid_extensions.includes(file_type)){
+      let fileProp = event.target.name;
+      console.log(file_type);
+      let csv_file = event.target.files[0].name;
+      this.setState({ [fileProp]: csv_file });  
+      let type = fileProp.replace("CsvFile", '')
+      // console.log(type)
+      // this.setState({[type]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
 
-    let type = fileProp.replace("CsvFile", '')
-    console.log(type)
-    this.setState({[type]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
+      let fileReader = new FileReader(); //creating new FileReader object
+        fileReader.readAsText(file, "UTF-8");
+        fileReader.onload = () => {
+            var lines = fileReader.result.split("\r\n");
+            var result = [];
+            var headers = lines[0].split(",");
+            var len = lines.length;
+            for (var i = 0; i < headers.length; i++) {
+                var obj = {};
+                var values=[]
+                for (var j = 1; j < len-1; j++) {
+                    var currentline = lines[j].split(",");
+                    values.push(parseFloat(currentline[i]));
+                }
+                obj[headers[i]] = values;
+                result.push(obj);
+            }
+            var json = JSON.stringify(result); //JSON
+            json = json.replaceAll('{','');
+            json = json.replaceAll('}','');
+            json =json.substring(1,json.length-1); // remove wrapping []
+            json = "{" + json + "}";
+            // console.log(json);
+            this.setState({[type]: json})
+            console.log(this.state.anomaly)
+            console.log(this.state.learn)
+        }
+    }
+
   };
 
   submitHandler = (event) =>{
     alert("submitted files")
     const reader = new FileReader()
-    reader.readAsText(this.state.learn) // does it work?
+    // reader.readAsText(this.state.learn) // does it work?
     console.log(reader.result.substring(0,100)) // doesn't work
     axios.post('http://localhost:9876/detect', {}) // does it work?
   }
 
   render() {
     return (
-      <Form className="m-3 items mainForm" onSubmit={this.submitHandler()}>
+      <Form className="m-3 items mainForm" onSubmit={this.submitHandler}>
         <Row>
           <Col xs="auto">
             <Form.Control
