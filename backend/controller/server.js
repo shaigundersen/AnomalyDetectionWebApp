@@ -25,19 +25,22 @@ app.get("/", (req, res) => {
 
 app.post("/detect", (req, res) => {
   console.log("entered detect");
-  console.log(req.body);
-  let data = req.body.data;
-  let learnJson = data[0];
-  let testJson = data[1];
-  // let algoType = data[2]
+  //console.log(req.body);
+  let data = req.body;
+  let learnJson = JSON.parse(data.Learn);
+  let testJson = JSON.parse(data.Anomaly);
+  let algoType = data.DetectorType;
+  console.log(algoType);
   model
-    .detect("hybrid" /* algoType */, learnJson, testJson)
+    .detect(algoType /* algoType */, learnJson, testJson)
     .then((anomalyReport) => {
       console.log(anomalyReport);
       res.send(JSON.stringify(anomalyReport));
+      //res.end();
     })
     .catch((error) => console.log(error));
-
+  res.status(200);
+  res.end();
   // if (req.files) {
   //   const learnJson = req.body.train;
   //   const anomalyJson = req.body.test;
@@ -46,7 +49,6 @@ app.post("/detect", (req, res) => {
   //     .then((anomalyReport) => res.write(anomalyReport))
   //     .catch((error) => console.log(error));
   // }
-  res.end();
 });
 
 app.listen(8080, () => {
@@ -56,10 +58,11 @@ app.listen(8080, () => {
 /****************************
  *       region Test        *
  ****************************/
-// const learnName = "C:\\Users\\97205\\Desktop\\reg_flight.json";
+// const learnName = "C:\\Users\\97205\\Desktop\\reg_flight_new.json";
 // const anomalyName =
-//   "C:\\Users\\97205\\Desktop\\anomaly_flight_with_headers.json";
-// fs = require("fs");
+//   "C:\\Users\\97205\\Desktop\\anomaly_flight_with_headers_new.json";
+// const fs = require("fs");
+// const model = require("../model/AnomalyDetecor");
 // // read first file
 // fs.readFile(learnName, function (err, data) {
 //   if (err) {
@@ -72,11 +75,12 @@ app.listen(8080, () => {
 //         console.log(err);
 //       } else {
 //         const anomalyJson = JSON.parse(data);
+//         console.log(anomalyJson);
 //         // detect returns a promise
-//         model
-//           .detect("regression", learnJson, anomalyJson)
-//           .then((anomalyReport) => console.log(anomalyReport))
-//           .catch((error) => console.log(error));
+//         // model
+//         //   .detect("regression", learnJson, anomalyJson)
+//         //   .then((anomalyReport) => console.log(anomalyReport))
+//         //   .catch((error) => console.log(error));
 //       }
 //     });
 //   }

@@ -55,8 +55,8 @@ class InputForm extends Component {
         json = "{" + json + "}";
         // console.log(json);
         this.setState({ [fileDataProperty]: json });
-        console.log(this.state.learnFile);
-        console.log(this.state.anomalyFile);
+        // console.log(this.state.learnFile);
+        // console.log(this.state.anomalyFile);
       };
     }
   };
@@ -66,11 +66,15 @@ class InputForm extends Component {
     const reader = new FileReader();
     // reader.readAsText(this.state.learn) // does it work?
     // console.log(reader.result.substring(0,100)) // doesn't work
-    axios.post("/detect", {
-      DetectorType: this.state.detectorType,
-      Learn: this.state.learnFile,
-      Anomaly: this.state.anomalyFile,
-    });
+    axios
+      .post("/detect", {
+        DetectorType: this.state.detectorType,
+        Learn: this.state.learnFile,
+        Anomaly: this.state.anomalyFile,
+      })
+      .then((response) => {
+        console.log("response");
+      });
   };
 
   render() {
