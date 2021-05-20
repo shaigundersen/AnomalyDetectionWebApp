@@ -9,10 +9,10 @@ import axios from "axios";
 class InputForm extends Component {
   state = {
     detectorType: "",
-    learnCsvName: "Please Upload Learn CSV",
-    anomalyCsvName: "Please Upload Anomaly CSV",
-    learnCsv: null, // learn file
-    anomalyCsv: null, // test file
+    learnFileName: "Please Upload Learn CSV",
+    anomalyFileName: "Please Upload Anomaly CSV",
+    learnFile: null, // learn file
+    anomalyFile: null, // test file
   };
 
   selectionChanged = (event) => {
@@ -24,12 +24,12 @@ class InputForm extends Component {
     let file_type = file.type; //getting selected file type
     let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid image extensions in array
     if (valid_extensions.includes(file_type)) {
-      let fileProp = event.target.name;
-      let csv_file = event.target.files[0].name;
-      this.setState({ [fileProp]: csv_file });
-      let type = fileProp.replace("CsvFile", "");
-      // console.log(type)
-      // this.setState({[type]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
+      let fileNameProperty = event.target.name;
+      let fileName = event.target.files[0].name;
+      this.setState({ [fileNameProperty]: fileName });
+      let fileDataProperty = fileNameProperty.replace("Name", "");
+      // console.log(fileDataProperty)
+      // this.setState({[fileDataProperty]: event.target.files[0]}) // trying to change learn/anomaly to the chosen file
 
       let fileReader = new FileReader(); //creating new FileReader object
       fileReader.readAsText(file, "UTF-8");
@@ -54,9 +54,9 @@ class InputForm extends Component {
         json = json.substring(1, json.length - 1); // remove wrapping []
         json = "{" + json + "}";
         // console.log(json);
-        this.setState({ [type]: json });
-        console.log(this.state.learn);
-        console.log(this.state.anomaly);
+        this.setState({ [fileDataProperty]: json });
+        console.log(this.state.learnFile);
+        console.log(this.state.anomalyFile);
       };
     }
   };
@@ -68,8 +68,8 @@ class InputForm extends Component {
     // console.log(reader.result.substring(0,100)) // doesn't work
     axios.post("http://localhost:8081/detect", {
       DetectorType: this.state.detectorType,
-      Learn: this.state.learn,
-      Anomaly: this.state.anomaly,
+      Learn: this.state.learnFile,
+      Anomaly: this.state.anomalyFile,
     });
   };
 
@@ -94,9 +94,9 @@ class InputForm extends Component {
               <Form.File
                 className="inputFile"
                 id="custom-file"
-                label={this.state.learnCsvName}
+                label={this.state.learnFileName}
                 onInput={this.fileSelected}
-                name="learnCsvName"
+                name="learnFileName"
                 custom
               ></Form.File>
             </Form.Group>
@@ -106,8 +106,8 @@ class InputForm extends Component {
               <Form.File
                 className="inputFile"
                 id="custom-file"
-                label={this.state.anomalyCsvName}
-                name="anomalyCsvName"
+                label={this.state.anomalyFileName}
+                name="anomalyFileName"
                 onInput={this.fileSelected}
                 custom
               ></Form.File>
