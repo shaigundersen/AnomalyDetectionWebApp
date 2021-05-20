@@ -36,11 +36,10 @@ app.post("/detect", (req, res) => {
     .then((anomalyReport) => {
       console.log(anomalyReport);
       res.send(JSON.stringify(anomalyReport));
+      res.status(200);
       //res.end();
     })
     .catch((error) => console.log(error));
-  res.status(200);
-  res.end();
   // if (req.files) {
   //   const learnJson = req.body.train;
   //   const anomalyJson = req.body.test;
