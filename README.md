@@ -20,8 +20,8 @@ The majority of the code was written in React and JS.
   * controller: the server code. listen on port 8080 (localhost), receive data from the client, return the appropriate data by accessing the model 
   * addon: anomaly detectoion algorithms, written in CPP
 #### frontend
-* public: html file, the View
-* src: styles and React componnents with the logic of the View
+* public: an HTML file, the View
+* src: styles and React components with the logic of the View
 
 ### Instructions
 Server-side: To run the app on your local computer, ---
