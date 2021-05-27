@@ -27,7 +27,7 @@ The majority of the code was written in React and JS (frontend), and CPP (backen
 Server-side: To run the app on your local computer, ---
 
 Client-side: When opening the app, the client needs to choose an algorithm of anomaly detection from the given list, load a train and current CSV flights file (with features at the first line), and then press the "Submit" button.
-
+Another option is sending HTTP POST requests directly to the server (with the same parameters) and receiving the JSON as well.
 ### Further Documentation
 See UML diagrams under "UMLS" directory.
 
