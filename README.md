@@ -16,11 +16,12 @@ The majority of the code was written in React and JS.
 
 ### Folders and Files
 #### backend
-* model
+* *model*
 * controller
 * addon
 #### frontend
-* 
+* public
+* src
 
 ### Instructions
 
