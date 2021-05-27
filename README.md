@@ -14,7 +14,17 @@ This program was developed by Shai Gunderesn, Itamar Fisch, Neriya Fisch and Yeh
 The app has been programmed by the MVC architecture.
 The majority of the code was written in React and JS.
 
+### Folders and Files
+#### backend
+* model
+* controller
+* addon
+#### frontend
+* 
+
 ### Instructions
+
+
 When opening the app, the client needs to choose an algorithm of anomaly detection from the given list, load a train and current csv flights file (with features at the first line), and then press the "Submit" button.
 
 ```C#
@@ -32,8 +42,4 @@ public List<int> getAnomaliesTimeSteps(string cfKey){}
 See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video: https://youtu.be/C6J0noC6K6k  
-Not in the video:  
-Different anomaly detection algorithms can be chosen even after a flight inspection was started with another one.  
-Just click "Load Algorithm" button, and load the requested dll.  
-
+Link to the video: ?  
