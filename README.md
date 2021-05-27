@@ -20,15 +20,16 @@ The majority of the code was written in React and JS.
   * controller: the server code. listen on port 8080 (localhost), receive data from the client, return the appropriate data by accessing the model 
   * addon: anomaly detectoion algorithms, written in CPP
 #### frontend
-* public
-* src
+* public: html file, the View
+* src: styles and React componnents with the logic of the View
 
 ### Instructions
+Server-side: To run the app on your local computer, ---
 
-When opening the app, the client needs to choose an algorithm of anomaly detection from the given list, load a train and current CSV flights file (with features at the first line), and then press the "Submit" button.
+Client-side: When opening the app, the client needs to choose an algorithm of anomaly detection from the given list, load a train and current CSV flights file (with features at the first line), and then press the "Submit" button.
 
 ### Further Documentation
 See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video:
+Link to the video: ---
