@@ -12,7 +12,7 @@ We've has been using the following packages and modules (When opening the projec
 
 ### Code Design and Architecture:
 The app has been programmed by the MVC architecture.
-The majority of the code was written in React and JS.
+The majority of the code was written in React and JS (frontend), and CPP (backend).
 
 ### Folders and Files
 #### backend
