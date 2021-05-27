@@ -16,9 +16,9 @@ The majority of the code was written in React and JS.
 
 ### Folders and Files
 #### backend
-* *model*
-* controller
-* addon
+* model: get the algorithm and flight files, return JSON with anomalies due to the logic of the algorithm
+* controller: the server code. listen on port 8080 (localhost), recieve data from client, return the appropriate data by accessing the model 
+* addon: anomaly detectoion algorithms, written in CPP
 #### frontend
 * public
 * src
