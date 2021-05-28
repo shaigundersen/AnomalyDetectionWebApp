@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import InputForm from "./components/inputForm";
+import Controller from "./components/controller";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -21,7 +21,7 @@ ReactDOM.render(
       <Col>Anomaly Detection Server</Col>
     </Row>
     <Row>
-      <InputForm />
+      <Controller />
     </Row>
   </Container>,
   document.getElementById("root")

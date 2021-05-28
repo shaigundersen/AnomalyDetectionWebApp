@@ -4,9 +4,21 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 import "../style.css";
 import axios from "axios";
+
 class InputForm extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +31,7 @@ class InputForm extends Component {
       anomalyReport: null,
       learnFileError: false, // for validation
       anomalyFileError: false, // for validation
+      mydata: [],
     };
     // preserve the initial state to fall back to
     this.baseState = this.state;
@@ -60,10 +73,7 @@ class InputForm extends Component {
     let valid_extensions = ["application/vnd.ms-excel", "csv"]; //adding some valid csv extensions in array
     let fileNameProperty = event.target.name;
     let fileName = event.target.files[0].name;
-    console.log(fileNameProperty);
-    console.log(this.state.learnFileName);
     this.setState({ [fileNameProperty]: fileName });
-    console.log(this.state.learnFileName);
     let fileDataProperty = fileNameProperty.replace("Name", "");
     let fileError = fileNameProperty.replace("Name", "Error");
     if (valid_extensions.includes(file_type)) {
@@ -107,6 +117,7 @@ class InputForm extends Component {
       })
       .then((response) => {
         this.setState({ anomalyReport: response.data.report });
+        this.props.parentCallback(response.data.report);
       })
       .catch((err) => console.log(err));
     //set the form back to default
@@ -116,72 +127,68 @@ class InputForm extends Component {
   render() {
     return (
       <React.Fragment>
-        <Form
-          className="m-3 items mainForm needs-validation"
-          noValidate
-          onSubmit={this.submitHandler}
-        >
-          <Row>
-            <Col xs="auto">
-              <Form.Control
-                as="select"
-                className="mr-sm-2"
-                onChange={this.selectionChanged}
-                custom
-                value={this.state.detectorType}
-              >
-                <option value="">Choose Algorithem...</option>
-                <option value="regression">Regression</option>
-                <option value="hybrid">Hybrid</option>
-              </Form.Control>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.File className="inputFile" id="custom-file" custom>
-                  <Form.File.Input
-                    name="learnFileName"
-                    onInput={this.fileSelected}
-                    isInvalid={this.state.learnFileError}
-                  />
-                  <Form.File.Label>{this.state.learnFileName}</Form.File.Label>
-                  <Form.Control.Feedback type="invalid">
-                    file is not CSV type!
-                  </Form.Control.Feedback>
-                </Form.File>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.File className="inputFile" id="custom-file" custom>
-                  <Form.File.Input
-                    name="anomalyFileName"
-                    onInput={this.fileSelected}
-                    isInvalid={this.state.anomalyFileError}
-                  />
-                  <Form.File.Label>
-                    {this.state.anomalyFileName}
-                  </Form.File.Label>
-                  <Form.Control.Feedback type="invalid">
-                    file is not CSV type!
-                  </Form.Control.Feedback>
-                </Form.File>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Button type="submit" disabled={this.checkFormValidation()}>
-                Submit
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-        <Card>
-          <Card.Body>
-            {/* prints report iff not null */}
-            {this.state.anomalyReport
-              ? JSON.stringify(this.state.anomalyReport)
-              : ""}
-          </Card.Body>
-        </Card>
+        <Row>
+          <Form
+            className="m-3 items mainForm needs-validation"
+            noValidate
+            onSubmit={this.submitHandler}
+          >
+            <Row>
+              <Col xs="auto">
+                <Form.Control
+                  as="select"
+                  className="mr-sm-2"
+                  onChange={this.selectionChanged}
+                  custom
+                  value={this.state.detectorType}
+                >
+                  <option value="">Choose Algorithem...</option>
+                  <option value="regression">Regression</option>
+                  <option value="hybrid">Hybrid</option>
+                </Form.Control>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.File className="inputFile" id="custom-file" custom>
+                    <Form.File.Input
+                      name="learnFileName"
+                      onInput={this.fileSelected}
+                      isInvalid={this.state.learnFileError}
+                    />
+                    <Form.File.Label>
+                      {this.state.learnFileName}
+                    </Form.File.Label>
+                    <Form.Control.Feedback type="invalid">
+                      file is not CSV type!
+                    </Form.Control.Feedback>
+                  </Form.File>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group>
+                  <Form.File className="inputFile" id="custom-file" custom>
+                    <Form.File.Input
+                      name="anomalyFileName"
+                      onInput={this.fileSelected}
+                      isInvalid={this.state.anomalyFileError}
+                    />
+                    <Form.File.Label>
+                      {this.state.anomalyFileName}
+                    </Form.File.Label>
+                    <Form.Control.Feedback type="invalid">
+                      file is not CSV type!
+                    </Form.Control.Feedback>
+                  </Form.File>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Button type="submit" disabled={this.checkFormValidation()}>
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Row>
       </React.Fragment>
     );
   }
