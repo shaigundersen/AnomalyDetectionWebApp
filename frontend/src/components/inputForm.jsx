@@ -3,19 +3,6 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-
 import "../style.css";
 import axios from "axios";
 
@@ -28,7 +15,6 @@ class InputForm extends Component {
       anomalyFileName: "Please Upload Anomaly CSV",
       learnFile: null, // learn file
       anomalyFile: null, // test file
-      anomalyReport: null,
       learnFileError: false, // for validation
       anomalyFileError: false, // for validation
       mydata: [],
@@ -116,8 +102,18 @@ class InputForm extends Component {
         anomaly: this.state.anomalyFile,
       })
       .then((response) => {
-        this.setState({ anomalyReport: response.data.report });
-        this.props.parentCallback(response.data.report);
+        let anomalyReport = response.data.report; // this report.timeStep is of type = [1,2,3,4]
+        let fixedReport = []; // this fixedReport.timeStep will be of type= [1,4]
+        anomalyReport.forEach((rep) => {
+          let first = rep.timeStep[0];
+          let last = rep.timeStep.pop();
+          fixedReport.push({
+            description: rep.description,
+            timeStep: [first, last],
+          });
+        });
+        // update parent on the given report
+        this.props.parentCallback(fixedReport);
       })
       .catch((err) => console.log(err));
     //set the form back to default

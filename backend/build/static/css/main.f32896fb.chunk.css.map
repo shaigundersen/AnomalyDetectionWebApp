@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style.css"],"names":[],"mappings":"AAAA,UACE,iBAAkB,CAClB,0BAAmB,CAAnB,kBACF,CACA,WACE,eACF,CACA,OACE,aACF","file":"main.f32896fb.chunk.css","sourcesContent":[".mainForm {\r\n  text-align: center;\r\n  align-items: center;\r\n}\r\n.inputFile {\r\n  text-align: left;\r\n}\r\n.chart {\r\n  margin: 0 auto;\r\n}\r\n"]}

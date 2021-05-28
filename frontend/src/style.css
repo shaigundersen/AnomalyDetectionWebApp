@@ -1,13 +1,10 @@
-.mainHeader {
-  text-align: "center";
-  padding: "10px 0";
-  font-size: "50px";
-  font-weight: "bold";
-  background: "rgba(0, 128, 0, 0.3)";
-}
 .mainForm {
   text-align: center;
+  align-items: center;
 }
 .inputFile {
   text-align: left;
+}
+.chart {
+  margin: 0 auto;
 }
