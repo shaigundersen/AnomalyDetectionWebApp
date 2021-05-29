@@ -12,7 +12,7 @@ We've has been using the following packages and modules (When opening the projec
 
 ### Code Design and Architecture:
 The app has been programmed by the MVC architecture.
-The majority of the code was written in React and JS (frontend), and CPP (backend).
+The majority of the code was written in React and JS (frontend), Node.js+express using CPP addon (backend).
 
 ### Folders and Files
 #### backend
@@ -32,4 +32,4 @@ Another option is sending HTTP POST requests directly to the server (with the sa
 See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video: ---
+Link to the video: ---[Anomaly Detection WebApp Demo](https://youtu.be/wK3IkKHpW28).
