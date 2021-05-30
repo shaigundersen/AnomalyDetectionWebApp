@@ -27,8 +27,9 @@ The majority of the code was written in React and JS (frontend), Node.js+express
 #### Server-side:
 * Clown the project
 * Enter to "backend" directory with CLI
+* run the code:
 ```bash
-* npm start
+npm start
 ```
 
 #### Client-side:
