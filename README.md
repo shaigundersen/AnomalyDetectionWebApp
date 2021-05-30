@@ -24,12 +24,19 @@ The majority of the code was written in React and JS (frontend), Node.js+express
 * src: styles and React components with the logic of the View
 
 ### Instructions
-Server-side: To run the app on your local computer, ---
+#### Server-side:
+* Clown the project
+* Enter to "backend" directory with CLI
+```bash
+* npm start
+```
 
-Client-side: When opening the app, the client needs to choose an algorithm of anomaly detection from the given list, load a train and current CSV flights file (with features at the first line), and then press the "Submit" button.
-Another option is sending HTTP POST requests directly to the server (with the same parameters) and receiving the JSON as well.
+#### Client-side:
+* Open the app with your browser (localhost:8080)
+* the client needs to choose an algorithm of anomaly detection from the given list, load a train and current CSV flights file (with features at the first line), and then press the "Submit" button.
+* Another option is sending HTTP POST requests directly to the server (with the same parameters) and receiving the JSON as well.
 ### Further Documentation
 See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video: ---[Anomaly Detection WebApp Demo](https://youtu.be/wK3IkKHpW28).
+Link to the video: [Anomaly Detection WebApp Demo](https://youtu.be/wK3IkKHpW28)
